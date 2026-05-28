@@ -2,16 +2,16 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:15-alpine
-    container_name: dev-postgres
+    image: postgis/postgis:16-3.4 # Mudamos para a imagem que tem suporte a mapas (PostGIS)
+    container_name: georout-postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: root
       POSTGRES_DB: desafio_db
     ports:
-      - "5432:5432"
+      - "5434:5432" # <-- Mudamos a porta externa para 5434 para não dar conflito com seus outros projetos
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - georout_postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
+  georout_postgres_data:
