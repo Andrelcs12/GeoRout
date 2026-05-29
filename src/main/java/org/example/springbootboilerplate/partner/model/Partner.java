@@ -1,4 +1,4 @@
-package org.example.springbootboilerplate.partner;
+package org.example.springbootboilerplate.partner.model;
 
 
 import jakarta.persistence.*;
