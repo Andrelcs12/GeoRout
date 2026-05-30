@@ -24,21 +24,16 @@ public class PartnerMapper {
         Partner partner = new Partner();
         partner.setName(dto.name());
         partner.setMaxCapacity(dto.maxCapacity());
-        partner.setCurrentCapacity(0); // Todo parceiro nasce com zero pedidos em andamento
-        partner.setActive(true);       // Ativo por padrão no cadastro
+        partner.setCurrentCapacity(0);
+        partner.setActive(true);
         partner.setStreet(dto.street());
         partner.setNumber(dto.number());
-
-        // 1. Cria o ponto geométrico central com base na latitude e longitude obtidas
         Point centerPoint = geometryFactory.createPoint(new Coordinate(longitude, latitude));
 
-        // 2. Converte o raio de metros para graus decimais aproximados.
         double radiusInDegrees = dto.radiusInMeters() / 111320.0;
 
-        // 3. O JTS gera um buffer (um polígono regular de 32 lados) para simular o círculo perfeito
         Geometry bufferGeometry = centerPoint.buffer(radiusInDegrees, 32);
 
-        // 4. Garante que o resultado seja tratado pelo banco como um MultiPolygon para bater com o Model
         MultiPolygon coverageArea;
         if (bufferGeometry instanceof MultiPolygon) {
             coverageArea = (MultiPolygon) bufferGeometry;
